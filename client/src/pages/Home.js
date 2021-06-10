@@ -22,7 +22,7 @@ function Home() {
           posts &&
           posts.map((post) => (
             <Grid.Column key={post.id}>
-              {/* <PostCard post={post} /> */}
+              <PostCard post={post} />
             </Grid.Column>
           ))
         )}
