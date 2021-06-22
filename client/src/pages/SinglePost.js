@@ -6,21 +6,21 @@ import moment from "moment";
 
 import { AuthContext } from "../context/auth";
 import LikeButton from "../components/LikeButton";
+import DeleteButton from "../components/DeleteButton";
 
 function SinglePost(props) {
   const postId = props.match.params.postId;
   const { user } = useContext(AuthContext);
   console.log(postId);
 
-  const {
-    data: { getPost },
-  } = useQuery(FETCH_POST_QUERY, {
+  const { data: { getPost } = {} } = useQuery(FETCH_POST_QUERY, {
     variables: {
       postId,
     },
   });
 
   let postMarkup;
+
   if (!getPost) {
     postMarkup = <p>Loading post...</p>;
   } else {
@@ -45,7 +45,7 @@ function SinglePost(props) {
               float="right"
             />
           </Grid.Column>
-          <Grid.Column width={2}>
+          <Grid.Column width={10}>
             <Card fluid>
               <Card.Content>
                 <Card.Header>{username}</Card.Header>
@@ -61,12 +61,15 @@ function SinglePost(props) {
                   onClick={() => console.log("Comment on post")}
                 >
                   <Button basic color="blue">
-                    <Icon name="ocmments" />
-                    <Label basic color="blue" pointing="left">
-                      {commentCount}
-                    </Label>
+                    <Icon name="comments" />
                   </Button>
+                  <Label basic color="blue" pointing="left">
+                    {commentCount}
+                  </Label>
                 </Button>
+                {user && user.username === username && (
+                  <DeleteButton postId={id} />
+                )}
               </Card.Content>
             </Card>
           </Grid.Column>
@@ -74,6 +77,8 @@ function SinglePost(props) {
       </Grid>
     );
   }
+
+  return postMarkup;
 }
 
 const FETCH_POST_QUERY = gql`
