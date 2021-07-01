@@ -45,6 +45,9 @@ An easy-to-use social media application for posting, liking, and commenting on "
 
 ## Technologies
 
+- `HTML`
+- `CSS`
+- `JavaScript`
 - `MongoDB`
 - `Express.js`
 - `React.js`
